@@ -1,0 +1,13 @@
+body {
+	font-family: 'Roboto Mono', monospace;
+	color: #FFFFFF;
+	background-color: #303030;
+}
+
+.output {
+	margin: 10px;
+	padding: 20px;
+	border: 2px solid #FFFFFF;
+	border-radius: 5px;
+	display: inline-block;
+}
