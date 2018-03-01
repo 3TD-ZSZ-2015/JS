@@ -1,4 +1,4 @@
-function createArray(size) {
+function createZeroFilled2DArray(size) {
     let array = [];
     for (let y = 0; y < size; ++y) {
         let subarray = [];
@@ -13,31 +13,58 @@ function createArray(size) {
     return array;
 }
 
-function modifyArray(array) {
-    for (let i = 0; i < array.length / 2 + 1; ++i) {
-        for (let y = i + 1; y < array.length - i - 1; ++y) {
-            for (let x = i + 1; x < array.length - i - 1; ++x) {
-                array[y][x] = i + 1;
+
+/*
+ * This function works in this way (example):
+ * STEP1
+ * 00000
+ * 00000
+ * 00000
+ * 00000
+ * 00000
+ *
+ * STEP2
+ * 00000
+ * 01110
+ * 01110
+ * 01110
+ * 00000
+ *
+ * STEP3
+ * 00000
+ * 01110
+ * 01210
+ * 01110
+ * 00000
+ */
+function markWaterCircles(array) {
+    for (let circleIndex = 0; circleIndex < array.length / 2 + 1; ++circleIndex) {
+        for (let y = circleIndex + 1; y < array.length - circleIndex - 1; ++y) {
+            for (let x = circleIndex + 1; x < array.length - circleIndex - 1; ++x) {
+                array[y][x] = circleIndex + 1;
             }
         }
     }
 }
 
+function writeDataToTable(array) {
+    const table = document.querySelector('#table');
+    table.innerHTML = "";
 
-const table = document.querySelector('#table');
-const button = document.querySelector('#button');
-
-button.addEventListener('click', function() {
-    const number = document.querySelector('#number').value;
-    const array = createArray(number);
-    modifyArray(array);
-    
-    for (let y = 0; y < number; ++y) {
+    for (let y = 0; y < array.length; ++y) {
         const row = table.insertRow(-1);
 
-        for (let x = 0; x < number; ++x) {
+        for (let x = 0; x < array.length; ++x) {
             const cell = row.insertCell(-1);
             cell.innerHTML = array[y][x];
         }
     }
+}
+
+const button = document.querySelector('#button');
+button.addEventListener('click', function() {
+    const size = document.querySelector('#number').value;
+    const array = createZeroFilled2DArray(size);
+    markWaterCircles(array);
+    writeDataToTable(array);    
 });
